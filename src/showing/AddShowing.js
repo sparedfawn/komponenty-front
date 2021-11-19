@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
-import styled from "styled-components";
+import { Redirect } from "react-router";
+import './AddShowing.css'
 
 class AddShowing extends React.Component {
 
@@ -13,7 +14,8 @@ class AddShowing extends React.Component {
             isOpenedMovie: false,
             headerValueMovie: 'Movie',
             isOpenedRoom: false,
-            headerValueRoom: 'Room'
+            headerValueRoom: 'Room',
+            redirect: false
         }
     }
 
@@ -48,7 +50,20 @@ class AddShowing extends React.Component {
             }, {
                 headers: {
                 'Content-type': 'application/json'
-            }}).then(response => console.log(response))
+            }}).then(response => {
+                if (response.status === 200) {
+
+                    let func = this.props.addShowing
+                    func({
+                        date: this.state.date,
+                        movie: movie,
+                        room: room,
+                        takenSeats: []
+                    })
+                }
+            })
+
+            this.setState({redirect: true})
         }
     }
 
@@ -61,7 +76,10 @@ class AddShowing extends React.Component {
 
     setIsOpenedMovie = () => {
         this.setState(prevState => {
-            return {isOpenedMovie: !prevState.isOpenedMovie}
+            return {
+                isOpenedMovie: !prevState.isOpenedMovie,
+                isOpenedRoom: false
+            }
         })
     }
 
@@ -74,7 +92,10 @@ class AddShowing extends React.Component {
 
     setIsOpenedRoom = () => {
         this.setState(prevState => {
-            return {isOpenedRoom: !prevState.isOpenedRoom}
+            return {
+                isOpenedRoom: !prevState.isOpenedRoom,
+                isOpenedMovie: false
+            }
         })
     }
 
@@ -95,65 +116,33 @@ class AddShowing extends React.Component {
 
     render() {
 
-        const DropDownContainer = styled("div")`
-        width: 10.5em;
-        margin: 0 auto;
-          float: left;
-        `;
+        if (this.state.redirect) {
 
-        const DropDownHeader = styled("div")`
-        margin-bottom: 0.8em;
-        padding: 0.4em 2em 0.4em 1em;
-        box-shadow: 0 2px 3px rgba(0,0,0,0.15);
-        font-weight: 500;
-        font-size: 1.3rem;
-        color: #3faffa;
-        background: #ffffff;
-        `;
-
-        const DropDownListContainer = styled("div")``;
-
-        const DropDownList = styled("ul")`
-          padding: 0;
-          margin: 0;
-          padding-left: 1em;
-          background: #ffffff;
-          border: 2px solid #e5e5e5;
-          box-sizing: border-box;
-          color: #3faffa;
-          font-size: 1.3rem;
-          font-weight: 500;
-          &:first-child {
-            padding-top: 0.8em;
-          }`;
-
-        const ListItem = styled("li")`
-          list-style: none;
-        margin-bottom: 0.8em;
-        `;
+            return <Redirect to="/showing"/>
+        }
 
         return (
             <div>
                 <input type="datetime-local" value={this.state.date} onChange={this.dateOnChange}/>
                 <button onClick={this.addShowing}>Add</button>
 
-                <DropDownContainer>
-                    <DropDownHeader onClick={this.setIsOpenedMovie}>{this.state.headerValueMovie}</DropDownHeader>
-                    {this.state.isOpenedMovie && (<DropDownListContainer>
-                        <DropDownList>
-                            {this.state.movieList.map(e => <ListItem onClick={this.setHeaderValueMovie}>{e.title}</ListItem>)}
-                        </DropDownList>
-                    </DropDownListContainer>)}
-                </DropDownContainer>
+                <div class="dropdownContainer">
+                    <div class="dropdownHeader" onClick={this.setIsOpenedMovie}>{this.state.headerValueMovie}</div>
+                    {this.state.isOpenedMovie && (<div>
+                        <ul class="dropdownList">
+                            {this.state.movieList.map(e => <li class="listItem" onClick={this.setHeaderValueMovie}>{e.title}</li>)}
+                        </ul>
+                    </div>)}
+                </div>
 
-                <DropDownContainer>
-                    <DropDownHeader onClick={this.setIsOpenedRoom}>{this.state.headerValueRoom}</DropDownHeader>
-                    {this.state.isOpenedRoom && (<DropDownListContainer>
-                        <DropDownList>
-                            {this.state.roomList.map(e => <ListItem onClick={this.setHeaderValueRoom}>{e.number}</ListItem>)}
-                        </DropDownList>
-                    </DropDownListContainer>)}
-                </DropDownContainer>
+                <div class="dropdownContainer">
+                    <div class="dropdownHeader" onClick={this.setIsOpenedRoom}>{this.state.headerValueRoom}</div>
+                    {this.state.isOpenedRoom && (<div>
+                        <ul class="dropdownList">
+                            {this.state.roomList.map(e => <li class="listItem" onClick={this.setHeaderValueRoom}>{e.number}</li>)}
+                        </ul>
+                    </div>)}
+                </div>
             </div>
         )
     }

@@ -1,10 +1,11 @@
 import React from "react";
-import Showing from "./Showing";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import AddMovie from "./AddMovie";
 import axios from "axios";
-import AddShowing from "./AddShowing";
+import Movie from "./Movie";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-class ShowingList extends React.Component {
+
+class MovieList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,13 +15,21 @@ class ShowingList extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:7777/showing/all')
+        axios.get('http://localhost:7777/movie/all')
             .then(response => this.setState(state => {
                 console.log(response.data)
                 let list = response.data
                 return { list: list }
             }))
             .catch(error => console.log(error))
+    }
+
+    addMovie = (movie) => {
+        this.setState(state => {
+            let list = state.list
+            list.push(movie)
+            return { list: list }
+        })
     }
 
     render() {
@@ -30,27 +39,25 @@ class ShowingList extends React.Component {
         }
         else {
             list = this.state.list.map(e => <div>
-                <Showing date={e.date} movie={e.movie} room={e.room} takenSeats={e.takenSeats}/>
+                <Movie title={e.title} duration={e.duration}/>
             </div>)
         }
         return (
-            <div>
-                <Router>
+            <Router>
                     <Route
                         exact
-                        path="/showing"
+                        path="/movie"
                         render={() => <div>
                             {list}
-                            <Link to="/showing/add">Dodaj</Link>
+                            <Link to="/movie/add">Dodaj</Link>
                         </div>}/>
                     <Route
                         exact
-                        path="/showing/add"
-                        render={() => <AddShowing/>}/>
+                        path="/movie/add"
+                        render={() => <AddMovie addMovie={this.addMovie}/>}/>
                 </Router>
-            </div>
         )
     }
 }
 
-export default ShowingList
+export default MovieList

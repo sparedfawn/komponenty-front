@@ -1,6 +1,6 @@
 import React from "react";
-import Movie from "./Movie";
-import Room from "./Room";
+import Movie from "../movie/Movie";
+import Room from "../room/Room";
 
 class Showing extends React.Component {
 
@@ -17,10 +17,10 @@ class Showing extends React.Component {
     render() {
         return (
             <div>
-                <p>Data: {this.state.date.substr(0, this.state.date.indexOf('T'))}</p>
-                <p>Godzina: {this.state.date.substr(this.state.date.indexOf('T') + 1, this.state.date.length)}</p>
-                <p>Pozostalo biletow: {parseInt(this.state.room.capacity) - this.state.takenSeats.length }</p>
-                <Movie title={this.state.movie.title} time={this.state.movie.duration}/>
+                <p>Data: {this.state.date.substr(0, this.state.date.indexOf('T'))}; 
+                Godzina: {this.state.date.substr(this.state.date.indexOf('T') + 1, this.state.date.length)}; 
+                Pozostalo biletow: {parseInt(this.state.room.capacity) - this.state.takenSeats.length }</p>
+                <Movie title={this.state.movie.title} duration={this.state.movie.duration}/>
                 <Room num={this.state.room.number} capacity={this.state.room.capacity}/>
             </div>
         );
