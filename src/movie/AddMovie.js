@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Redirect } from "react-router";
+import "../style.css"
 
 class AddMovie extends React.Component {
 
@@ -56,11 +57,22 @@ class AddMovie extends React.Component {
         }
 
         return (
-            <div>
-                <input type="text" value={this.state.title} placeholder="Tytul filmu" onChange={this.titleOnChange}/>
-                <input type="text" value={this.state.duration} placeholder="Dlugosc trwania" onChange={this.durationOnChange}/>
-                <button onClick={this.addMovie}>Add</button>
-            </div>
+            <form class="formLayout">
+                <div>
+                    <label class="form-label">Tytul filmu</label>
+                    <input type="text" class="form-control" value={this.state.title} onChange={this.titleOnChange}></input>
+                </div>
+
+                <div class="paddingTop">
+                    <label class="form-label">Dlugosc trwania</label>
+                    <input type="number" class="form-control" value={this.state.duration} onChange={this.durationOnChange}></input>
+                </div>
+
+                <div class="paddingTop center">
+                    <button class="btn btn-primary" onClick={this.addMovie}>Dodaj</button>
+                </div>
+            </form>
+            
         )
     }
 }

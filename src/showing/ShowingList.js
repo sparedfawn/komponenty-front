@@ -3,6 +3,7 @@ import Showing from "./Showing";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from "axios";
 import AddShowing from "./AddShowing";
+import "../style.css"
 
 class ShowingList extends React.Component {
 
@@ -37,7 +38,10 @@ class ShowingList extends React.Component {
     render() {
         let list
         if (!this.state.list.length) {
-            list = <p>List is empty</p>
+            list = 
+            <div class="alertLayout center">
+                <div class="alert alert-secondary" role="alert">Brak dostępnych seansów</div>
+            </div>
         }
         else {
             list = this.state.list.map(e => <div>
@@ -50,10 +54,20 @@ class ShowingList extends React.Component {
                     <Route
                         exact
                         path="/showing"
-                        render={() => <div>
-                            {list}
-                            <Link to="/showing/add">Dodaj</Link>
-                        </div>}/>
+                        render={() =>
+                        <div>
+                            <div class="row">
+                                <div>
+                                    {list}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="center padding">
+                                    <Link class="btn btn-primary" to="/showing/add">Dodaj</Link>
+                                </div>
+                            </div>
+                        </div>}
+                    />
                     <Route
                         exact
                         path="/showing/add"
