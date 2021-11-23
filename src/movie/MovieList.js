@@ -3,6 +3,7 @@ import AddMovie from "./AddMovie";
 import axios from "axios";
 import Movie from "./Movie";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import "../style.css";
 
 
 class MovieList extends React.Component {
@@ -35,7 +36,10 @@ class MovieList extends React.Component {
     render() {
         let list
         if (!this.state.list.length) {
-            list = <p>List is empty</p>
+            list =
+            <div class="alertLayout center">
+                <div class="alert alert-secondary" role="alert">Brak dodanych filmów</div>
+            </div>
         }
         else {
             list = this.state.list.map(e => <div>
@@ -47,10 +51,20 @@ class MovieList extends React.Component {
                     <Route
                         exact
                         path="/movie"
-                        render={() => <div>
-                            {list}
-                            <Link to="/movie/add">Dodaj</Link>
-                        </div>}/>
+                        render={() =>
+                        <div>
+                            <div class="row">
+                                <div>
+                                    {list}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="center padding">
+                                    <Link class="btn btn-primary" to="/movie/add">Dodaj</Link>
+                                </div>
+                            </div>
+                        </div>}
+                    />
                     <Route
                         exact
                         path="/movie/add"

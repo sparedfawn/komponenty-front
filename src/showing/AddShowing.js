@@ -2,6 +2,7 @@ import React from "react";
 import axios from 'axios';
 import { Redirect } from "react-router";
 import './AddShowing.css'
+import "../style.css"
 
 class AddShowing extends React.Component {
 
@@ -12,9 +13,9 @@ class AddShowing extends React.Component {
             movieList: [],
             roomList: [],
             isOpenedMovie: false,
-            headerValueMovie: 'Movie',
+            headerValueMovie: 'Film',
             isOpenedRoom: false,
-            headerValueRoom: 'Room',
+            headerValueRoom: 'Sala',
             redirect: false
         }
     }
@@ -36,8 +37,8 @@ class AddShowing extends React.Component {
     }
 
     addShowing = () => {
-        if (this.state.headerValueRoom==='Room' || this.state.headerValueMovie==='Movie') {
-            alert("Wybierz wymagane dane")
+        if (this.state.headerValueRoom==='Sala' || this.state.headerValueMovie==='Film') {
+            document.getElementById("alertBox").style.visibility = "visible";
         }
         else {
             let room = this.state.roomList.find(e => e.number===parseInt(this.state.headerValueRoom));
@@ -122,28 +123,80 @@ class AddShowing extends React.Component {
         }
 
         return (
-            <div>
-                <input type="datetime-local" value={this.state.date} onChange={this.dateOnChange}/>
-                <button onClick={this.addShowing}>Add</button>
+            // <div class="container-fluid ">
+            //     <div class="row paddingTriple">
+            //         <div class="col-md-4">
+            //             <div class="dropdown">
+            //                 <button class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" onClick={this.setIsOpenedMovie}>
+            //                     {this.state.headerValueMovie}
+            //                 </button>
 
-                <div class="dropdownContainer">
-                    <div class="dropdownHeader" onClick={this.setIsOpenedMovie}>{this.state.headerValueMovie}</div>
-                    {this.state.isOpenedMovie && (<div>
-                        <ul class="dropdownList">
-                            {this.state.movieList.map(e => <li class="listItem" onClick={this.setHeaderValueMovie}>{e.title}</li>)}
+            //                 <ul class="dropdown-menu" >
+            //                     {this.state.movieList.map(e => <li class="listItem center" onClick={this.setHeaderValueMovie}>{e.title}</li>)}
+            //                 </ul>
+            //             </div> 
+            //         </div>
+
+            //         <div class="col-md-4">
+            //             <div class="dropdown">
+                            // <button class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" onClick={this.setIsOpenedRoom}>
+                            //     {this.state.headerValueRoom}
+                            // </button>
+
+                            // <ul class="dropdown-menu" >
+                            //     {this.state.roomList.map(e => <li class="listItem center" onClick={this.setHeaderValueRoom}>{e.number}</li>)}
+                            // </ul>
+            //             </div>
+            //         </div>
+
+            //         <div class="col-md-4">
+            //             <input type="datetime-local" value={this.state.date} onChange={this.dateOnChange}/>
+            //         </div>
+
+            //     </div>
+            //     <div class="row">
+            //         <div class="col-md-12">
+            //             <button onClick={this.addShowing}>Add</button>  
+            //         </div>
+            //     </div>
+            // </div>
+
+            <div>
+                <div class="addShowing">
+                    <div class="dropdown padding">
+                        <button class="btn btn-outline-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" onClick={this.setIsOpenedMovie}>
+                            {this.state.headerValueMovie}
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                            {this.state.movieList.map(e => <li class="listItem center" onClick={this.setHeaderValueMovie}>{e.title}</li>)}
                         </ul>
-                    </div>)}
+                    </div> 
+
+                    <div class="dropdown padding">
+                        <button class="btn btn-outline-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" onClick={this.setIsOpenedRoom}>
+                            {this.state.headerValueRoom}
+                        </button>
+
+                        <ul class="dropdown-menu" >
+                            {this.state.roomList.map(e => <li class="listItem center" onClick={this.setHeaderValueRoom}>{e.number}</li>)}
+                        </ul>
+                    </div>
+
+                    <div class="padding">
+                        <input type="datetime-local" class="form-control" value={this.state.date} onChange={this.dateOnChange}></input>
+                    </div>
+
+                    <div class="padding">
+                        <button class="btn btn-primary" onClick={this.addShowing}>Dodaj</button> 
+                    </div>
                 </div>
 
-                <div class="dropdownContainer">
-                    <div class="dropdownHeader" onClick={this.setIsOpenedRoom}>{this.state.headerValueRoom}</div>
-                    {this.state.isOpenedRoom && (<div>
-                        <ul class="dropdownList">
-                            {this.state.roomList.map(e => <li class="listItem" onClick={this.setHeaderValueRoom}>{e.number}</li>)}
-                        </ul>
-                    </div>)}
+                <div id="alertBox" class="alert alert-danger" role="alert">
+                    Wprowadź poprawne dane!
                 </div>
             </div>
+
         )
     }
 }

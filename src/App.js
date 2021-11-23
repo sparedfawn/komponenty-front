@@ -2,12 +2,23 @@ import ShowingList from "./showing/ShowingList";
 import MovieList from "./movie/MovieList"
 import RoomList from "./room/RoomList"
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/dist/dropdown';
+import "./style.css"
 
 function App() {
   return (
     <div>
         <Router>
-            <p><Link to="/">Home</Link> <Link to="/showing">Showing</Link> <Link to="/room">Room</Link> <Link to="/movie">Movie</Link></p>
+            <nav class="navbar navbar-light">
+                <div class="d-md-flex d-block flex-row mx-md-auto mx-0">
+                    <Link class="nav-link active" to="/">Strona główna</Link>
+                    <Link class="nav-link" to="/showing">Seanse</Link>
+                    <Link class="nav-link" to="/room">Sale</Link>
+                    <Link class="nav-link active" to="/movie">Filmy</Link>
+                </div>
+            </nav>
+
             <Route
                 exact
                 path="/"
