@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Room from "./Room";
+import "../style.css"
 
 class RoomList extends React.Component {
 
@@ -24,7 +25,10 @@ class RoomList extends React.Component {
     render() {
         let list
         if (!this.state.list.length) {
-            list = <p>List is empty</p>
+            list = 
+            <div class="alertLayout center">
+                <div class="alert alert-secondary" role="alert">Brak dodanych sal</div>
+            </div>
         }
         else {
             list = this.state.list.map(e => <Room num={e.number} capacity={e.capacity}/>)
