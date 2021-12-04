@@ -1,5 +1,6 @@
 import React from "react";
 import "../style.css"
+import PropTypes, { number } from "prop-types"
 
 class Showing extends React.Component {
 
@@ -28,6 +29,13 @@ class Showing extends React.Component {
             </div>
         );
     }
+}
+
+Showing.propTypes = {
+    date: PropTypes.string.isRequired,
+    movie: PropTypes.shape({title: PropTypes.string.isRequired, duration: PropTypes.number.isRequired}).isRequired,
+    room: PropTypes.shape({number: PropTypes.number.isRequired, capacity: PropTypes.number.isRequired, }).isRequired,
+    takenSeats: PropTypes.arrayOf(number).isRequired
 }
 
 export default Showing
