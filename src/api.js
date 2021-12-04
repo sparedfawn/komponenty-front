@@ -14,9 +14,24 @@ export const addMovie = (movie) => {
         return error;
     })
 }
- 
+
 export const getMovies = () => {
     return axios.get('http://localhost:7777/movie/all').then(response => {
+        if (response.status === 200) {
+            return response
+        }
+    }).catch((error) => {
+        return error;
+    })
+}
+
+export const editMovie = (element, id) => {
+    return axios.put('http://localhost:7777/movie/edit/' + id,
+        element, {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    }).then(response => {
         if (response.status === 200) {
             return response
         }
