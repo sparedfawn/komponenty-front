@@ -2,10 +2,11 @@ import React from "react";
 import AddMovie from "./AddMovie";
 import axios from "axios";
 import Movie from "./Movie";
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import "../style.css";
 import MovieDetails from "./MovieDetails";
 import EditMovie from "./EditMovie";
+import * as Api from "../api"
 
 
 class MovieList extends React.Component {
@@ -22,20 +23,22 @@ class MovieList extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:7777/movie/all')
-            .then(response => this.setState(state => {
-                let list = response.data
-                return {list: list}
-            }))
+        Api.getMovies().then(response => this.setState(state => {
+            let list = response.data
+            return { list: list }
+        }))
             .catch(error => console.log(error))
     }
 
     addMovie = (movie) => {
-        this.setState(state => {
-            let list = state.list
-            list.push(movie)
-            return {list: list}
+        Api.addMovie(movie).then(() => {
+            this.setState(state => {
+                let list = state.list
+                list.push(movie)
+                return { list: list }
+            })
         })
+
     }
 
     editMovie(element, index) {
@@ -43,7 +46,7 @@ class MovieList extends React.Component {
         this.setState((prevState) => {
             let list = prevState.list
             list[index] = element
-            return {list: list}
+            return { list: list }
         })
     }
 
@@ -52,7 +55,7 @@ class MovieList extends React.Component {
         this.setState((prevState) => {
             let list = prevState.list
             list.splice(index, 1)
-            return {list: list}
+            return { list: list }
         })
     }
 
@@ -66,11 +69,12 @@ class MovieList extends React.Component {
         } else {
             list = this.state.list.map(e => <div>
                 <Link to={"/movie/details/" + Array.prototype.indexOf.call(this.state.list, e)}>
-                    <Movie title={e.title} duration={e.duration}/>
+                    <Movie title={e.title} duration={e.duration} />
                 </Link>
             </div>)
         }
         return (
+            
             <Router>
                 <Route
                     exact
@@ -92,19 +96,19 @@ class MovieList extends React.Component {
                 <Route
                     exact
                     path="/movie/add"
-                    render={() => <AddMovie addMovie={this.addMovie}/>}/>
+                    render={() => <AddMovie addMovie={this.addMovie} />} />
                 <Route
                     exact
                     path="/movie/details/:id"
-                    render={({match}) =>
+                    render={({ match }) =>
                         <MovieDetails movie={this.state.list[match.params.id]} index={parseInt(match.params.id)}
-                                      deleteMovie={this.deleteMovie}/>}/>
+                            deleteMovie={this.deleteMovie} />} />
                 <Route
                     exact
                     path="/movie/edit/:id"
-                    render={({match}) =>
+                    render={({ match }) =>
                         <EditMovie movie={this.state.list[match.params.id]} index={parseInt(match.params.id)}
-                                   editMovie={this.editMovie}/>}/>
+                            editMovie={this.editMovie} />} />
             </Router>
         )
     }

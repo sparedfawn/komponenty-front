@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 const Room = (props) => {
 
     return (
@@ -10,6 +12,11 @@ const Room = (props) => {
             </div> 
         </div>
     )
+}
+
+Room.propTypes = {
+    num: PropTypes.number.isRequired,
+    capacity: PropTypes.number.isRequired, 
 }
 
 export default Room

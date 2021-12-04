@@ -93,7 +93,7 @@ class ShowingList extends React.Component {
                 <Route
                     exact
                     path="/showing/add"
-                    render={() => <AddShowing addShowing={this.addShowing}/>}/>
+                    render={() => <AddShowing addShowing={this.addShowing} showingList={this.state.list}/>}/>
                 <Route
                     exact
                     path="/showing/details/:id"
@@ -106,6 +106,7 @@ class ShowingList extends React.Component {
                     render={({match}) =>
                         <EditShowing showing={this.state.list[match.params.id]} index={parseInt(match.params.id)}
                                      editShowing={this.editShowing}/>}/>
+            
             </Router>
         )
     }

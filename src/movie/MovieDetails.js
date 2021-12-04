@@ -2,6 +2,7 @@ import React from "react";
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import {Redirect} from "react-router";
 import axios from "axios";
+import Movie from "./Movie";
 
 class MovieDetails extends React.Component {
 
