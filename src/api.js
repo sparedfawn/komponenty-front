@@ -39,3 +39,14 @@ export const editMovie = (element, id) => {
         return error;
     })
 }
+
+export const deleteMovie = (id) => {
+    return axios.delete('http://localhost:7777/movie/delete/' + id
+    ).then(response => {
+        if (response.status === 200) {
+            return response
+        }
+    }).catch((error) => {
+        return error;
+    })
+}
