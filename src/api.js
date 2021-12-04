@@ -1,5 +1,9 @@
 import axios from "axios"
 
+
+
+// MOVIE
+
 export const addMovie = (movie) => {
     return axios.post('http://localhost:7777/movie/add',
         movie, {
@@ -49,4 +53,17 @@ export const deleteMovie = (id) => {
     }).catch((error) => {
         return error;
     })
+}
+
+// ROOM
+
+export const getAllRoom = () => {
+    return  axios.get('http://localhost:7777/room/all').then(response => {
+        if (response.status === 200) {
+            return response
+        }
+    }).catch((error) => {
+        return error;
+    })
+
 }
