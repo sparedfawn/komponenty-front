@@ -6,6 +6,7 @@ import AddShowing from "./AddShowing";
 import "../style.css"
 import EditShowing from "./EditShowing";
 import ShowingDetails from "./ShowingDetails";
+import * as Api from "../api"
 
 class ShowingList extends React.Component {
 
@@ -21,7 +22,7 @@ class ShowingList extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:7777/showing/all')
+        Api.getAllShowing()
             .then(response => this.setState(state => {
                 let list = response.data
                 return {list: list}
@@ -29,31 +30,36 @@ class ShowingList extends React.Component {
             .catch(error => console.log(error))
     }
 
-    addShowing(element) {
+    addShowing = (element) =>{
+        Api.addShowing(element).then(() => {
+            this.setState((prevState) => {
+                let list = prevState.list
+                list.push(element)
+                return {list: list}
+            })
+        })
+       
+    }
 
-        this.setState((prevState) => {
-            let list = prevState.list
-            list.push(element)
-            return {list: list}
+    editShowing =(element, index) => {
+        Api.editShowing(element,index).then(()=> {
+            this.setState((prevState) => {
+                let list = prevState.list
+                list[index] = element
+                return {list: list}
+            })
         })
     }
 
-    editShowing(element, index) {
-
-        this.setState((prevState) => {
-            let list = prevState.list
-            list[index] = element
-            return {list: list}
+    deleteShowing = (index) => {
+        Api.deleteShowing(index).then(() => {
+            this.setState((prevState) => {
+                let list = prevState.list
+                list.splice(index, 1)
+                return {list: list}
+            })
         })
-    }
-
-    deleteShowing(index) {
-
-        this.setState((prevState) => {
-            let list = prevState.list
-            list.splice(index, 1)
-            return {list: list}
-        })
+        
     }
 
     render() {
@@ -68,6 +74,7 @@ class ShowingList extends React.Component {
             list = this.state.list.map(e => <div>
                 <Link to={"/showing/details/" + Array.prototype.indexOf.call(this.state.list, e)}>
                     <Showing date={e.date} movie={e.movie} room={e.room} takenSeats={e.takenSeats}/>
+                    
                 </Link>
             </div>)
         }

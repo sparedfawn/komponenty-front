@@ -17,9 +17,8 @@ class MovieDetails extends React.Component {
     }
 
 
-    deleteMovie = () => {
-        axios.delete('http://localhost:7777/movie/delete/' + this.props.index)
-                    
+    deleteMovie = () => {          
+        
         let func = this.props.deleteMovie
         func(this.state.index)
         

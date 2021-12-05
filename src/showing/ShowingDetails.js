@@ -17,14 +17,8 @@ class ShowingDetails extends React.Component {
 
 
     deleteShowing() {
-        axios.delete('http://localhost:7777/showing/delete/' + this.props.index)
-            .then(response => {
-                if (response.status === 200) {
-                    let func = this.props.deleteShowing
-                    func(this.state.index)
-                }
-            })
-
+        let func = this.props.deleteShowing
+        func(this.state.index)
         this.setState({redirect:true})
     }
 
