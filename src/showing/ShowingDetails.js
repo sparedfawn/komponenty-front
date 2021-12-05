@@ -35,18 +35,27 @@ class ShowingDetails extends React.Component {
             return <Redirect to="/showing"/>
         }
 
+        let date = this.state.showing.date;
+        date = date.split("T");
 
-        return <div>
-            <p>{this.state.showing.date}</p>
-            <p>{this.state.showing.movie.title}</p>
-            <p>{this.state.showing.movie.duration}</p>
-            <p>{this.state.showing.room.number}</p>
-            <p>{this.state.showing.room.capacity}</p>
-            <p>{this.state.showing.takenSeats}</p>
-            <Link to={"/showing/edit/" + parseInt(this.state.index)}>Edytuj</Link>
-            <button onClick={this.deleteShowing}>Usun</button>
-        </div>
-
+        return (
+            <div class="singleLayout padding">
+                <div class="card">
+                    <div class="card-body center">
+                        <h5 class="card-title">{this.state.showing.movie.title}</h5>
+                        <h6 class="card-title">{date[0]}</h6>
+                        <p class="center">Sala: {this.state.showing.room.number}</p>
+                        <p class="center">Godzina: {date[1]}</p>
+                        <p class="center">Pozostałych miejsc: {parseInt(this.state.showing.room.capacity) - this.state.showing.takenSeats.length }</p>
+                        <Link to={"/showing/edit/" + parseInt(this.state.index)}>
+                            <button class="btn btn-outline-warning marginRight">Edytuj</button>
+                        </Link>
+                        <button class="btn btn-outline-danger" onClick={this.deleteShowing}>Usun</button>
+                    </div>
+                </div> 
+            </div>
+            
+        )
     }
 }
 

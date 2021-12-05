@@ -6,10 +6,9 @@ class ShowingOnDate extends React.Component {
 
     constructor(props) {
         super(props);
-        let date = new Date()
         this.state = {
             list: [],
-            date: date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + date.getDate()
+            date: ''
         }
     }
 
@@ -24,37 +23,36 @@ class ShowingOnDate extends React.Component {
 
     dateOnChange = (event) => {
         let value = event.target.value
+        
         this.setState({
             date: value
         })
+        console.log(value);
     }
 
     render() {
-
-        let list
-        if (!this.state.list.length) {
+        let list = this.state.list.filter(e => parseInt(e.date.substring(8,10)) === parseInt(this.state.date.substring(8,10)) &&
+                                                            parseInt(e.date.substring(0,4)) === parseInt(this.state.date.substring(0,4)) &&
+                                                            parseInt(e.date.substring(5,7)) === parseInt(this.state.date.substring(5,7)))
+        if (!list.length) {
             list =
                 <div class="alertLayout center">
                     <div class="alert alert-secondary" role="alert">Brak seansów danego dnia</div>
                 </div>
         } else {
-            list = this.state.list.filter(e => parseInt(e.date.substring(8,10)) === parseInt(this.state.date.substring(8,10)) &&
-                parseInt(e.date.substring(0,4)) === parseInt(this.state.date.substring(0,4)) &&
-                    parseInt(e.date.substring(5,7)) === parseInt(this.state.date.substring(5,7))).map(e =>
+            list = list.map(e =>
                 <div>
                     <Showing date={e.date} movie={e.movie} room={e.room} takenSeats={e.takenSeats}/>
                 </div>)
         }
-
-        return <div>
-            <div className="padding">
-                <input type="datetime-local" className="form-control" value={this.state.date}
-                       onChange={this.dateOnChange}/>
-
-                {list}
+        return (
+            <div>
+                <div className="padding">
+                    <input type="date" className="form-control" onChange={this.dateOnChange}/>
+                    {list}
+                </div>
             </div>
-
-        </div>
+        )
     }
 }
 

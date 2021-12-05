@@ -24,9 +24,17 @@ function App() {
             <Route
                 exact
                 path="/"
-                render={ () => <div>
-                    <Link to="/showing_on_date">Seanse w dniach</Link>
-                    <Link to="/currently_playing">Aktualnie trwajace</Link>
+                render={ () =>
+                <div class="paddingTop center"> 
+                    <Link to="/showing_on_date">
+                        <button class="btn btn-primary marginRight">Seanse w dniach</button>
+                    </Link>
+                    <Link to="/currently_playing">
+                        <button class="btn btn-primary marginRight">Aktualnie trwajace</button>
+                    </Link>
+                    <Link to="/tickets">
+                        <button class="btn btn-primary marginRight">Bilety</button>
+                    </Link>
                 </div>}/>
             <Route
                 exact
