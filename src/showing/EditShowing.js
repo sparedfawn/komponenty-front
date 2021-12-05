@@ -1,8 +1,9 @@
 import React from "react";
 import axios from 'axios';
-import {Redirect} from "react-router";
+import { Redirect } from "react-router";
 import './AddShowing.css'
 import "../style.css"
+import * as Api from "../api"
 
 class EditShowing extends React.Component {
 
@@ -21,18 +22,16 @@ class EditShowing extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:7777/room/all')
-            .then(response => this.setState(state => {
-                let list = response.data
-                return { roomList: list }
-            }))
+        Api.getAllRoom().then(response => this.setState(state => {
+            let list = response.data
+            return { roomList: list }
+        }))
             .catch(error => console.log(error))
 
-        axios.get('http://localhost:7777/movie/all')
-            .then(response => this.setState(state => {
-                let list = response.data
-                return {movieList: list}
-            }))
+        Api.getMovies().then(response => this.setState(state => {
+            let list = response.data
+            return { movieList: list }
+        }))
             .catch(error => console.log(error))
     }
 
@@ -41,29 +40,15 @@ class EditShowing extends React.Component {
         let room = this.state.roomList.find(e => e.number === parseInt(this.state.headerValueRoom));
         let movie = this.state.movieList.find(e => e.title === this.state.headerValueMovie);
 
-        axios.put('http://localhost:7777/showing/edit/' + this.props.index, {
+        let func = this.props.editShowing
+        func({
             date: this.state.date,
             movie: movie,
             room: room,
             takenSeats: this.props.showing.takenSeats
-        }, {
-            headers: {
-                'Content-type': 'application/json'
-            }
-        }).then(response => {
-            if (response.status === 200) {
+        }, parseInt(this.props.index))
 
-                let func = this.props.editShowing
-                func({
-                    date: this.state.date,
-                    movie: movie,
-                    room: room,
-                    takenSeats: this.props.showing.takenSeats
-                }, parseInt(this.props.index))
-            }
-        })
-
-        this.setState({redirect: true})
+        this.setState({ redirect: true })
     }
 
     dateOnChange = (event) => {
@@ -90,7 +75,7 @@ class EditShowing extends React.Component {
 
         if (this.state.redirect) {
 
-            return <Redirect to="/showing"/>
+            return <Redirect to="/showing" />
         }
         return (
 
@@ -103,7 +88,7 @@ class EditShowing extends React.Component {
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                             {this.state.movieList.map(e => <li class="listItem center"
-                                                               onClick={this.setHeaderValueMovie}>{e.title}</li>)}
+                                onClick={this.setHeaderValueMovie}>{e.title}</li>)}
                         </ul>
                     </div>
 
@@ -114,12 +99,12 @@ class EditShowing extends React.Component {
 
                         <ul class="dropdown-menu">
                             {this.state.roomList.map(e => <li class="listItem center"
-                                                              onClick={this.setHeaderValueRoom}>{e.number}</li>)}
+                                onClick={this.setHeaderValueRoom}>{e.number}</li>)}
                         </ul>
                     </div>
 
                     <div class="padding">
-                        <input type="datetime-local" class="form-control" value={this.state.date} onChange={this.dateOnChange}/>
+                        <input type="datetime-local" class="form-control" value={this.state.date} onChange={this.dateOnChange} />
                     </div>
 
                     <div class="padding">

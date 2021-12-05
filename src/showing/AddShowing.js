@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import './AddShowing.css'
 import "../style.css"
 import ShowingList from "./ShowingList";
+import * as Api from "../api"
 
 class AddShowing extends React.Component {
 
@@ -22,15 +23,13 @@ class AddShowing extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:7777/movie/all')
-            .then(response => this.setState(state => {
+        Api.getMovies().then(response => this.setState(state => {
                 let list = response.data
                 return { movieList: list }
             }))
             .catch(error => console.log(error))
 
-        axios.get('http://localhost:7777/room/all')
-            .then(response => this.setState(state => {
+        Api.getAllRoom().then(response => this.setState(state => {
                 let list = response.data
                 return { roomList: list }
             }))
@@ -97,16 +96,6 @@ class AddShowing extends React.Component {
 
             if(typeof(sameRoom) === 'undefined' && typeof(sameTime) === 'undefined') {
                 document.getElementById("alertBox").style.visibility = "hidden";
-                axios.post('http://localhost:7777/showing/add',{
-                    date: this.state.date,
-                    movie: movie,
-                    room: room
-                }, {
-                    headers: {
-                    'Content-type': 'application/json'
-                }}).then(response => {
-                    if (response.status === 200) {
-
                         let func = this.props.addShowing
                         func({
                             date: this.state.date,
@@ -114,9 +103,6 @@ class AddShowing extends React.Component {
                             room: room,
                             takenSeats: []
                         })
-                    }
-                })
-
                 this.setState({redirect: true})
             } else {
                 document.getElementById("alertBox").style.visibility = "visible";
