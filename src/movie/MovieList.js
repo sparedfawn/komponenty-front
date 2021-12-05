@@ -41,22 +41,25 @@ class MovieList extends React.Component {
 
     }
 
-    editMovie(element, index) {
-
-        this.setState((prevState) => {
-            let list = prevState.list
-            list[index] = element
-            return { list: list }
-        })
+    editMovie = (element, index) => {
+        Api.editMovie(element,index).then(() =>{
+            this.setState((prevState) => {
+                let list = prevState.list
+                list[index] = element
+                return { list: list }
+            })
+        }) 
     }
 
-    deleteMovie(index) {
-
-        this.setState((prevState) => {
-            let list = prevState.list
-            list.splice(index, 1)
-            return { list: list }
+    deleteMovie = (index) => {
+        Api.deleteMovie(index).then(() => {
+            this.setState((prevState) => {
+                let list = prevState.list
+                list.splice(index, 1)
+                return { list: list }
+            })
         })
+        
     }
 
     render() {

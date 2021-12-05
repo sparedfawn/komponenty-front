@@ -18,15 +18,11 @@ class MovieDetails extends React.Component {
     }
 
 
-    deleteMovie() {
-        axios.delete('http://localhost:7777/movie/delete/' + this.props.index)
-            .then(response => {
-                if (response.status === 200) {
-                    let func = this.props.deleteMovie
-                    func(this.state.index)
-                }
-            })
-
+    deleteMovie = () => {          
+        
+        let func = this.props.deleteMovie
+        func(this.state.index)
+        
         this.setState({redirect:true})
     }
 

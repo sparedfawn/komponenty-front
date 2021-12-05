@@ -24,6 +24,7 @@ const x = (props,propName) =>{
     return null
     
 }
+
 Movie.propTypes = {
     title: (props,propName) =>{
         let prop = props[propName]
