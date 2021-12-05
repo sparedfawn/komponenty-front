@@ -1,9 +1,28 @@
 import React from "react";
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import {BrowserRouter as Link} from 'react-router-dom';
 import {Redirect} from "react-router";
-import axios from "axios";
 import "../style.css";
-import Movie from "./Movie";
+import * as Api from "../api"
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
 
 class MovieDetails extends React.Component {
 
@@ -12,9 +31,20 @@ class MovieDetails extends React.Component {
         this.state = {
             movie: props.movie,
             index: props.index,
-            redirect: false
+            redirect: false,
+            showings: [],
+            labels: [],
+            data: {}
         }
         this.deleteMovie = this.deleteMovie.bind(this)
+    }
+
+    componentDidMount() {
+        Api.getAllShowing().then(response => this.setState(state => {
+                let list = response.data
+                return {showings: list}
+            }))
+            .catch(error => console.log(error))
     }
 
 
@@ -29,22 +59,75 @@ class MovieDetails extends React.Component {
     render() {
 
         if (this.state.redirect) {
-
             return <Redirect to="/movie"/>
         }
 
+        let data = {labels: [], datasets: [{
+            label: 'ilość sprzedanych blietów',
+            backgroundColor: 'rgba(255,99,132,0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+            borderWidth: 1,
+            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+            hoverBorderColor: 'rgba(255,99,132,1)',
+            data: []
+        }]}
+        let sameDay = new Map();
+        let films = this.state.showings.filter(e => e.movie.title === this.state.movie.title);
+        films.forEach(e => {
+            let day = e.date.substring(8, 10);
+            let month = e.date.substring(5, 7);
+            let year = e.date.substring(0, 4);
+            if(!sameDay.get(year+"-"+month+"-"+day)) {
+                sameDay.set(year+"-"+month+"-"+day, parseInt(e.takenSeats.length))
+            } else {
+                sameDay.set(year+"-"+month+"-"+day, parseInt(sameDay.get(year+"-"+month+"-"+day)) + parseInt(e.takenSeats.length))
+            }
+        })
+
+        for(let [key, value] of sameDay) {
+            data.labels.push(key);
+            data.datasets[0].data.push(value)
+        }
+
+        sameDay.forEach(e=> {
+            
+        }) 
+
+        let options = {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Popularność',
+              },
+            },
+          };
+
         return (
-            <div class="singleLayout padding">
-                <div class="card center">
-                    <div class="card-body">
-                        <h5 class="card-title">{this.state.movie.title}</h5>
-                        <p>Czas trwania: {this.state.movie.duration} min</p>
-                        <Link to={"/movie/edit/" + parseInt(this.state.index)}>
-                            <button class="btn btn-outline-warning marginRight">Edytuj</button>
-                        </Link>
-                        <button class="btn btn-outline-danger" onClick={this.deleteMovie}>Usun</button>
+            <div>
+                <div class="singleLayout padding">
+                    <div class="card center">
+                        <div class="card-body">
+                            <h5 class="card-title">{this.state.movie.title}</h5>
+                            <p>Czas trwania: {this.state.movie.duration} min</p>
+                            <Link to={"/movie/edit/" + parseInt(this.state.index)}>
+                                <button class="btn btn-outline-warning marginRight">Edytuj</button>
+                            </Link>
+                            <button class="btn btn-outline-danger" onClick={this.deleteMovie}>Usun</button>
+                        </div>
                     </div>
-                </div> 
+                </div>
+                <div>
+                    <Bar
+                        data={data}
+                        width={100}
+                        height={50}
+                        options={options}
+                    />
+                </div>
             </div>
         )
     }

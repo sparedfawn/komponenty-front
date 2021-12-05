@@ -23,11 +23,24 @@
 }
 
 .paddingTop {
-    padding-top: 5%;
+    padding-top: 2%;
+}
+
+.marginTop {
+    margin-top: 1%;
 }
 
 .marginRight {
     margin-right: 2%;
+}
+
+.marginLeft {
+    margin-left: 1%;
+}
+
+.selectW {
+    display: flex;
+    width: 30%;
 }
 
 .addShowing {

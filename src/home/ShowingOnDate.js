@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Showing from "../showing/Showing";
+import * as Api from "../api"
 
 class ShowingOnDate extends React.Component {
 
@@ -13,8 +14,7 @@ class ShowingOnDate extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:7777/showing/all')
-            .then(response => this.setState(state => {
+        Api.getAllShowing().then(response => this.setState(state => {
                 let list = response.data
                 return {list: list}
             }))

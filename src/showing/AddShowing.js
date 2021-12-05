@@ -1,9 +1,7 @@
 import React from "react";
-import axios from 'axios';
 import { Redirect } from "react-router";
 import './AddShowing.css'
 import "../style.css"
-import ShowingList from "./ShowingList";
 import * as Api from "../api"
 
 class AddShowing extends React.Component {
@@ -75,8 +73,10 @@ class AddShowing extends React.Component {
                 else if(newFilmDate.getMonth() < todayDate.getMonth()) { return e; }
                 else if(newFilmDate.getDate() < todayDate.getDate()) { return e; }
                 else if(newFilmDate.getDate() === todayDate.getDate()) {
-                    if(e.room.number === parseInt(this.state.headerValueRoom)) {
-                        if(newFilmEndHour < oldFilmStartHour) { }
+                     if(e.room.number === parseInt(this.state.headerValueRoom)) {
+                        if(newFilmStartHour < todayDate.getHours()) {return e;}
+                        else if(newFilmStartHour === todayDate.getHours() && newFilmStartMinute < todayDate.getMinutes()){return e;}
+                        else if(newFilmEndHour < oldFilmStartHour) { }
                         else if(newFilmEndHour === oldFilmStartHour && newFilmEndMinute < oldFilmStartMinute) { }
                         else if(oldFilmEndHour < newFilmStartHour) { }
                         else if(oldFilmEndHour === newFilmStartHour && oldFilmEndMinute < newFilmStartMinute) { }

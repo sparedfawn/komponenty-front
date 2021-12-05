@@ -32,9 +32,6 @@ function App() {
                     <Link to="/currently_playing">
                         <button class="btn btn-primary marginRight">Aktualnie trwajace</button>
                     </Link>
-                    <Link to="/tickets">
-                        <button class="btn btn-primary marginRight">Bilety</button>
-                    </Link>
                 </div>}/>
             <Route
                 exact

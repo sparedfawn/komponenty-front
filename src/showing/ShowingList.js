@@ -106,7 +106,7 @@ class ShowingList extends React.Component {
                     path="/showing/details/:id"
                     render={({match}) =>
                         <ShowingDetails showing={this.state.list[match.params.id]} index={parseInt(match.params.id)}
-                    deleteShowing={this.deleteShowing}/>}/>
+                    deleteShowing={this.deleteShowing} editShowing={this.editShowing}/>}/>
                 <Route
                     exact
                     path="/showing/edit/:id"
