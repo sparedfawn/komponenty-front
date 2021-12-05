@@ -112,7 +112,7 @@ class ShowingList extends React.Component {
                     path="/showing/edit/:id"
                     render={({match}) =>
                         <EditShowing showing={this.state.list[match.params.id]} index={parseInt(match.params.id)}
-                                     editShowing={this.editShowing}/>}/>
+                                    editShowing={this.editShowing} showingList={this.state.list}/>}/>
             
             </Router>
         )
