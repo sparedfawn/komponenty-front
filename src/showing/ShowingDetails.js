@@ -89,7 +89,7 @@ class ShowingDetails extends React.Component {
                                 {emptySeats}
                             </select>
                             <Link to={"/showing/"} class="marginTop">
-                                <button onClick={this.editShowing} class="btn btn-outline-success marginTop">Zapisz</button>
+                                <button onClick={this.editShowing} class="btn btn-outline-success marginTop">Kup bilet</button>
                             </Link>
                         </div>
                         } 

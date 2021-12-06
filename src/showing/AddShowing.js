@@ -35,6 +35,8 @@ class AddShowing extends React.Component {
     }
 
     addShowing = () => {
+        let alert = document.getElementById("alertBox");
+        alert.textContent = "W tych godzinach sala jest zajeta!";
         if (this.state.headerValueRoom==='Sala' || this.state.headerValueMovie==='Film' || this.state.date==='Data') {
             document.getElementById("alertBox").style.visibility = "visible";
         }
@@ -69,13 +71,13 @@ class AddShowing extends React.Component {
 
                 let tmp = new Date(e.date);
 
-                if(newFilmDate.getFullYear() < todayDate.getFullYear()) { return e; }
-                else if(newFilmDate.getMonth() < todayDate.getMonth()) { return e; }
-                else if(newFilmDate.getDate() < todayDate.getDate()) { return e; }
+                if(newFilmDate.getFullYear() < todayDate.getFullYear()) { alert.textContent = "Ten dzień już minął!"; return e; }
+                else if(newFilmDate.getMonth() < todayDate.getMonth()) { alert.textContent = "Ten dzień już minął!"; return e; }
+                else if(newFilmDate.getDate() < todayDate.getDate()) { alert.textContent = "Ten dzień już minął!"; return e; }
                 else if(newFilmDate.getDate() === todayDate.getDate()) {
                      if(e.room.number === parseInt(this.state.headerValueRoom)) {
-                        if(newFilmStartHour < todayDate.getHours()) {return e;}
-                        else if(newFilmStartHour === todayDate.getHours() && newFilmStartMinute < todayDate.getMinutes()){return e;}
+                        if(newFilmStartHour < todayDate.getHours()) {alert.textContent = "Ta godzina już mineła!";return e;}
+                        else if(newFilmStartHour === todayDate.getHours() && newFilmStartMinute < todayDate.getMinutes()){alert.textContent = "Ta godzina już mineła!";return e;}
                         else if(newFilmEndHour < oldFilmStartHour) { }
                         else if(newFilmEndHour === oldFilmStartHour && newFilmEndMinute < oldFilmStartMinute) { }
                         else if(oldFilmEndHour < newFilmStartHour) { }
@@ -106,7 +108,6 @@ class AddShowing extends React.Component {
                 this.setState({redirect: true})
             } else {
                 document.getElementById("alertBox").style.visibility = "visible";
-                document.getElementById("alertBox").textContent = "W tych godzinach sala jest zajeta!";
             }
         }
     }

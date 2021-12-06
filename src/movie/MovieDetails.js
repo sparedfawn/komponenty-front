@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {Redirect} from "react-router";
 import "../style.css";
 import * as Api from "../api"
@@ -114,7 +114,7 @@ class MovieDetails extends React.Component {
                             <h5 class="card-title">{this.state.movie.title}</h5>
                             <p>Czas trwania: {this.state.movie.duration} min</p>
                             <Link to={"/movie/edit/" + parseInt(this.state.index)}>
-                                <button class="btn btn-outline-warning marginRight">Edytuj</button>
+                            <button class="btn btn-outline-warning marginRight">Edytuj</button>
                             </Link>
                             <button class="btn btn-outline-danger" onClick={this.deleteMovie}>Usun</button>
                         </div>

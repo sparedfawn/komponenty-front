@@ -7,9 +7,10 @@ class ShowingOnDate extends React.Component {
 
     constructor(props) {
         super(props);
+        let date = new Date()
         this.state = {
             list: [],
-            date: ''
+            date: date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + date.getDate()
         }
     }
 
@@ -47,7 +48,7 @@ class ShowingOnDate extends React.Component {
         }
         return (
             <div>
-                <div className="padding">
+                <div className="paddingTop">
                     <input type="date" className="form-control" onChange={this.dateOnChange}/>
                     {list}
                 </div>
