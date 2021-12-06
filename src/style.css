@@ -66,6 +66,12 @@
     text-align: center;
 }
 
+.chartsStyle {
+    width: 50%;
+    height: 30%;
+    margin: 0 auto;
+}
+
 #alertBox {
     visibility: hidden;
     margin-left: 40%;

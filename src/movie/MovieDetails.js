@@ -108,7 +108,7 @@ class MovieDetails extends React.Component {
 
         return (
             <div>
-                <div class="singleLayout padding">
+                <div class="singleLayout paddingTop">
                     <div class="card center">
                         <div class="card-body">
                             <h5 class="card-title">{this.state.movie.title}</h5>
@@ -120,7 +120,7 @@ class MovieDetails extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="chartsStyle paddingTop">
                     <Bar
                         data={data}
                         width={100}
