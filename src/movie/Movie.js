@@ -1,4 +1,6 @@
 import "../style.css";
+import PropTypes from "prop-types"
+
 
 const Movie = (props) => {
 
@@ -12,6 +14,35 @@ const Movie = (props) => {
             </div> 
         </div>
     )
+}
+
+const x = (props,propName) =>{
+    let prop = props[propName]
+    if(prop.charAt(0) !== prop.charAt(0).toUpperCase()){
+        return new Error("Nazwa filmu musi zaczynać się z dużej litery")
+    }
+    
+    return null
+}
+
+Movie.propTypes = {
+    title: (props,propName) =>{
+        let prop = props[propName]
+        if(typeof(prop)=='string'){
+            if(prop === ""){
+                return new Error("Nazwa jest wymagana")
+            }
+            if(prop.charAt(0) !== prop.charAt(0).toUpperCase()){
+                return new Error("Nazwa filmu musi zaczynać się z dużej litery")
+            }
+        }else{
+            return new Error("Wpisana nazwa musi być stringiem")
+        }
+        return null
+        
+    },
+    duration: PropTypes.number.isRequired
+   
 }
 
 export default Movie

@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "axios";
 import Room from "./Room";
 import "../style.css"
+import * as Api from "../api"
 
 class RoomList extends React.Component {
 
@@ -13,8 +13,7 @@ class RoomList extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:7777/room/all')
-            .then(response => this.setState(state => {
+        Api.getAllRoom().then(response => this.setState(state => {
                 console.log(response.data)
                 let list = response.data
                 return { list: list }

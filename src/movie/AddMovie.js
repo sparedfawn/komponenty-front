@@ -1,7 +1,7 @@
-import axios from "axios";
 import React from "react";
 import { Redirect } from "react-router";
 import "../style.css"
+
 
 class AddMovie extends React.Component {
 
@@ -15,25 +15,14 @@ class AddMovie extends React.Component {
     }
 
     addMovie = () => {
-
-        axios.post('http://localhost:7777/movie/add',{
-                title: this.state.title,
-                duration: this.state.duration
-            }, {
-                headers: {
-                'Content-type': 'application/json'
-            }}).then(response => {
-                if (response.status === 200) {
-
-                    let func = this.props.addMovie
-                    func({
-                        title: this.state.title,
-                        duration: this.state.duration
-                    })
-                }})
-
+        let func = this.props.addMovie
+        func({
+            title: this.state.title,
+            duration: parseInt(this.state.duration)
+            })
+                
         this.setState({redirect: true})
-    }
+                }
 
     titleOnChange = (event) => {
         let value = event.target.value
