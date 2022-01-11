@@ -12,6 +12,7 @@ const Showing = (props) => {
                     <h6 class="card-title">{props.date.substr(0, props.date.indexOf('T'))}</h6>
                     <p class="center">Sala: {props.room.number}</p>
                     <p class="center">Godzina: {props.date.substr(props.date.indexOf('T') + 1, props.date.length)}</p>
+                    <p class="center">Cena biletu: {props.ticketPrice} zl</p>
                     <p class="center">Pozostałych miejsc: {parseInt(props.room.capacity) - props.takenSeats.length }</p>
                 </div>
             </div> 

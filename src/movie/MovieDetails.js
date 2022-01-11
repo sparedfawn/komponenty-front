@@ -48,12 +48,23 @@ class MovieDetails extends React.Component {
     }
 
 
-    deleteMovie = () => {          
+    deleteMovie = () => {
         
-        let func = this.props.deleteMovie
-        func(this.state.index)
+        if (this.state.showings.filter(e => e.movie.title === this.state.movie.title).length > 0) {
+
+            document.getElementById("alertBox").style.visibility = "visible"
+            document.getElementById("alertBox").innerHTML = "Nie mozna usunac filmu, bo znajduja sie seanse z tym filmem"
+        }
+        else {
+
+            document.getElementById("alertBox").style.visibility = "hidden"
+            let func = this.props.deleteMovie
+            func(this.state.index)
         
-        this.setState({redirect:true})
+            this.setState({redirect:true})
+        }
+        
+        
     }
 
     render() {
@@ -119,6 +130,9 @@ class MovieDetails extends React.Component {
                             <button class="btn btn-outline-danger" onClick={this.deleteMovie}>Usun</button>
                         </div>
                     </div>
+                </div>
+                <div id="alertBox" class="alert alert-danger" role="alert">
+                    Wprowadź poprawne dane!
                 </div>
                 <div class="chartsStyle paddingTop">
                     <Bar

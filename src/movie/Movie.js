@@ -1,5 +1,5 @@
 import "../style.css";
-import PropTypes, { func } from "prop-types"
+import PropTypes from "prop-types"
 
 const Movie = (props) => {
 
@@ -22,14 +22,13 @@ const x = (props,propName) =>{
     }
     
     return null
-    
 }
 
 Movie.propTypes = {
     title: (props,propName) =>{
         let prop = props[propName]
         if(typeof(prop)=='string'){
-            if(prop == ""){
+            if(prop === ""){
                 return new Error("Nazwa jest wymagana")
             }
             if(prop.charAt(0) !== prop.charAt(0).toUpperCase()){

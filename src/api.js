@@ -65,7 +65,6 @@ export const getAllRoom = () => {
     }).catch((error) => {
         return error;
     })
-
 }
 
 // SHOWING

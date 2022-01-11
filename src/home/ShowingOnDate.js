@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import Showing from "../showing/Showing";
 import * as Api from "../api"
 

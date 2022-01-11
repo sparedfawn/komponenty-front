@@ -17,6 +17,7 @@ class AddShowing extends React.Component {
             isOpenedRoom: false,
             headerValueRoom: 'Sala',
             redirect: false,
+            price: 0
         }
     }
 
@@ -36,13 +37,14 @@ class AddShowing extends React.Component {
 
     addShowing = () => {
         let alert = document.getElementById("alertBox");
-        alert.textContent = "W tych godzinach sala jest zajeta!";
+        alert.textContent = "Sala jest w tym momencie zajeta"
         if (this.state.headerValueRoom==='Sala' || this.state.headerValueMovie==='Film' || this.state.date==='Data') {
-            document.getElementById("alertBox").style.visibility = "visible";
+            alert.style.visibility = "visible";
+            alert.textContent = "Formularz nie zostal wypelniony w calosci";
         }
         else {
-            let room = this.state.roomList.find(e => e.number===parseInt(this.state.headerValueRoom));
-            let movie = this.state.movieList.find(e => e.title===this.state.headerValueMovie);
+            let room = this.state.roomList.find(e => e.number === parseInt(this.state.headerValueRoom));
+            let movie = this.state.movieList.find(e => e.title === this.state.headerValueMovie);
             
             let sameRoom;
             let sameTime = this.props.showingList.find(e => {
@@ -71,14 +73,9 @@ class AddShowing extends React.Component {
 
                 let tmp = new Date(e.date);
 
-                if(newFilmDate.getFullYear() < todayDate.getFullYear()) { alert.textContent = "Ten dzień już minął!"; return e; }
-                else if(newFilmDate.getMonth() < todayDate.getMonth()) { alert.textContent = "Ten dzień już minął!"; return e; }
-                else if(newFilmDate.getDate() < todayDate.getDate()) { alert.textContent = "Ten dzień już minął!"; return e; }
-                else if(newFilmDate.getDate() === todayDate.getDate()) {
+                if (newFilmDate.getDate() === todayDate.getDate()) {
                      if(e.room.number === parseInt(this.state.headerValueRoom)) {
-                        if(newFilmStartHour < todayDate.getHours()) {alert.textContent = "Ta godzina już mineła!";return e;}
-                        else if(newFilmStartHour === todayDate.getHours() && newFilmStartMinute < todayDate.getMinutes()){alert.textContent = "Ta godzina już mineła!";return e;}
-                        else if(newFilmEndHour < oldFilmStartHour) { }
+                        if(newFilmEndHour < oldFilmStartHour) { }
                         else if(newFilmEndHour === oldFilmStartHour && newFilmEndMinute < oldFilmStartMinute) { }
                         else if(oldFilmEndHour < newFilmStartHour) { }
                         else if(oldFilmEndHour === newFilmStartHour && oldFilmEndMinute < newFilmStartMinute) { }
@@ -92,8 +89,7 @@ class AddShowing extends React.Component {
                         else if(oldFilmEndHour === newFilmStartHour && oldFilmEndMinute < newFilmStartMinute) { }
                         else { return e; }
                     }
-                }
-                
+                } 
             });
 
             if(typeof(sameRoom) === 'undefined' && typeof(sameTime) === 'undefined') {
@@ -103,7 +99,8 @@ class AddShowing extends React.Component {
                             date: this.state.date,
                             movie: movie,
                             room: room,
-                            takenSeats: []
+                            takenSeats: [],
+                            ticketPrice: this.state.price
                         })
                 this.setState({redirect: true})
             } else {
@@ -116,6 +113,14 @@ class AddShowing extends React.Component {
         let value = event.target.value
         this.setState( {
             date: value
+        })
+    }
+
+    priceOnChange = (event) => {
+
+        let value = event.target.value
+        this.setState({
+            price: value
         })
     }
 
@@ -191,6 +196,10 @@ class AddShowing extends React.Component {
 
                     <div class="padding">
                         <input type="datetime-local" class="form-control" value={this.state.date} onChange={this.dateOnChange}></input>
+                    </div>
+
+                    <div class="padding">
+                        <input type="number" class="form-control" value={this.state.price} onChange={this.priceOnChange}></input>
                     </div>
 
                     <div class="padding">

@@ -1,5 +1,4 @@
 import React from "react";
-import axios from 'axios';
 import { Redirect } from "react-router";
 import './AddShowing.css'
 import "../style.css"
@@ -15,7 +14,8 @@ class EditShowing extends React.Component {
             headerValueRoom: props.showing.room.number,
             movieList: [],
             roomList: [],
-            redirect: false
+            redirect: false,
+            price: props.showing.ticketPrice
         }
 
         this.editShowing = this.editShowing.bind(this)
@@ -70,14 +70,9 @@ class EditShowing extends React.Component {
 
                 let tmp = new Date(e.date);
 
-                if(newFilmDate.getFullYear() < todayDate.getFullYear()) { return e; }
-                else if(newFilmDate.getMonth() < todayDate.getMonth()) { return e; }
-                else if(newFilmDate.getDate() < todayDate.getDate()) { return e; }
-                else if(newFilmDate.getDate() === todayDate.getDate()) {
+                if (newFilmDate.getDate() === todayDate.getDate()) {
                      if(e.room.number === parseInt(this.state.headerValueRoom)) {
-                        if(newFilmStartHour < todayDate.getHours()) {return e;}
-                        else if(newFilmStartHour === todayDate.getHours() && newFilmStartMinute < todayDate.getMinutes()){return e;}
-                        else if(newFilmEndHour < oldFilmStartHour) { }
+                        if(newFilmEndHour < oldFilmStartHour) { }
                         else if(newFilmEndHour === oldFilmStartHour && newFilmEndMinute < oldFilmStartMinute) { }
                         else if(oldFilmEndHour < newFilmStartHour) { }
                         else if(oldFilmEndHour === newFilmStartHour && oldFilmEndMinute < newFilmStartMinute) { }
@@ -91,8 +86,7 @@ class EditShowing extends React.Component {
                         else if(oldFilmEndHour === newFilmStartHour && oldFilmEndMinute < newFilmStartMinute) { }
                         else { return e; }
                     }
-                }
-                
+                } 
             });
 
             if(typeof(sameRoom) === 'undefined' && typeof(sameTime) === 'undefined') {
@@ -102,7 +96,8 @@ class EditShowing extends React.Component {
                     date: this.state.date,
                     movie: movie,
                     room: room,
-                    takenSeats: this.props.showing.takenSeats
+                    takenSeats: this.props.showing.takenSeats,
+                    ticketPrice: this.state.price
                 }, parseInt(this.props.index))
         
                 this.setState({ redirect: true })
@@ -117,6 +112,14 @@ class EditShowing extends React.Component {
         let value = event.target.value
         this.setState({
             date: value
+        })
+    }
+
+    priceOnChange = (event) => {
+
+        let value = event.target.value
+        this.setState({
+            price: value
         })
     }
 
@@ -167,6 +170,10 @@ class EditShowing extends React.Component {
 
                     <div class="padding">
                         <input type="datetime-local" class="form-control" value={this.state.date} onChange={this.dateOnChange} />
+                    </div>
+
+                    <div class="padding">
+                        <input type="number" class="form-control" value={this.state.price} onChange={this.priceOnChange} />
                     </div>
 
                     <div class="padding">

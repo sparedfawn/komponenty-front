@@ -1,6 +1,5 @@
 import React from "react";
 import AddMovie from "./AddMovie";
-import axios from "axios";
 import Movie from "./Movie";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import "../style.css";
@@ -38,7 +37,6 @@ class MovieList extends React.Component {
                 return { list: list }
             })
         })
-
     }
 
     editMovie = (element, index) => {

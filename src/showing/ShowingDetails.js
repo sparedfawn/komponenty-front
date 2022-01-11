@@ -10,11 +10,25 @@ class ShowingDetails extends React.Component {
         this.state = {
             showing: props.showing,
             index: props.index,
-            redirect: false
+            redirect: false,
+            value: 1
         }
         this.deleteShowing = this.deleteShowing.bind(this)
         this.editShowing = this.editShowing.bind(this)
         this.handleChange = this.handleChange.bind(this);
+        this.purchaseTicket = this.purchaseTicket.bind(this);
+    }
+
+    componentDidMount() {
+
+        let emptySeats = [];
+
+        for(let i = 0; i < this.state.showing.room.capacity; i++) {
+            emptySeats[i] = i + 1;
+        }
+        emptySeats = emptySeats.filter(e => !this.state.showing.takenSeats.includes(e))
+
+        this.setState({value: parseInt(emptySeats[0])})
     }
 
     editShowing() {
@@ -23,7 +37,8 @@ class ShowingDetails extends React.Component {
             date: this.state.showing.date,
             movie: this.state.showing.movie,
             room: this.state.showing.room,
-            takenSeats: this.state.showing.takenSeats
+            takenSeats: this.state.showing.takenSeats,
+            ticketPrice: this.state.showing.ticketPrice
         }, parseInt(this.props.index))
     }
 
@@ -34,10 +49,17 @@ class ShowingDetails extends React.Component {
         this.setState({redirect:true})
     }
 
+    purchaseTicket() {
+
+        this.state.showing.takenSeats.push(parseInt(this.state.value));
+
+        this.editShowing()
+    }
+
     handleChange(e) {
+
         let value = e.target.value
-        console.log(value);
-        this.state.showing.takenSeats.push(parseInt(value));
+        this.setState({value: parseInt(value)})
     }
 
     render() {
@@ -54,8 +76,7 @@ class ShowingDetails extends React.Component {
         }
         emptySeats = emptySeats.filter(e => !this.state.showing.takenSeats.includes(e))
         emptySeats = emptySeats.map(e => <option value={e}>{e}</option>)
-        console.log(this.state.showing.takenSeats);
-        console.log(emptySeats);
+
 
         let date = this.state.showing.date;
         date = date.split("T");
@@ -89,7 +110,7 @@ class ShowingDetails extends React.Component {
                                 {emptySeats}
                             </select>
                             <Link to={"/showing/"} class="marginTop">
-                                <button onClick={this.editShowing} class="btn btn-outline-success marginTop">Kup bilet</button>
+                                <button onClick={this.purchaseTicket} class="btn btn-outline-success marginTop">Kup bilet</button>
                             </Link>
                         </div>
                         } 
