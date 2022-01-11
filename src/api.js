@@ -5,7 +5,7 @@ import axios from "axios"
 // MOVIE
 
 export const addMovie = (movie) => {
-    return axios.post('http://localhost:7777/movie/add',
+    return axios.post('http://localhost:7777/movies',
         movie, {
         headers: {
             'Content-type': 'application/json'
@@ -20,7 +20,7 @@ export const addMovie = (movie) => {
 }
 
 export const getMovies = () => {
-    return axios.get('http://localhost:7777/movie/all').then(response => {
+    return axios.get('http://localhost:7777/movies').then(response => {
         if (response.status === 200) {
             return response
         }
@@ -30,7 +30,7 @@ export const getMovies = () => {
 }
 
 export const editMovie = (element, id) => {
-    return axios.put('http://localhost:7777/movie/edit/' + id,
+    return axios.put('http://localhost:7777/movies/' + id,
         element, {
         headers: {
             'Content-type': 'application/json'
@@ -45,7 +45,7 @@ export const editMovie = (element, id) => {
 }
 
 export const deleteMovie = (id) => {
-    return axios.delete('http://localhost:7777/movie/delete/' + id
+    return axios.delete('http://localhost:7777/movies/' + id
     ).then(response => {
         if (response.status === 200) {
             return response
@@ -58,7 +58,7 @@ export const deleteMovie = (id) => {
 // ROOM
 
 export const getAllRoom = () => {
-    return axios.get('http://localhost:7777/room/all').then(response => {
+    return axios.get('http://localhost:7777/rooms').then(response => {
         if (response.status === 200) {
             return response
         }
@@ -70,7 +70,7 @@ export const getAllRoom = () => {
 // SHOWING
 
 export const getAllShowing = () => {
-    return axios.get('http://localhost:7777/showing/all').then(response => {
+    return axios.get('http://localhost:7777/showings').then(response => {
         if (response.status === 200) {
             return response
         }
@@ -80,7 +80,7 @@ export const getAllShowing = () => {
 }
 
 export const addShowing = (element) => {
-    return axios.post('http://localhost:7777/showing/add',
+    return axios.post('http://localhost:7777/showings',
         element, {
         headers: {
             'Content-type': 'application/json'
@@ -95,7 +95,7 @@ export const addShowing = (element) => {
 }
 
 export const editShowing = (element, index) =>{
-    return axios.put('http://localhost:7777/showing/edit/' + index,
+    return axios.put('http://localhost:7777/showings/' + index,
     element, {
     headers: {
             'Content-type': 'application/json'
@@ -111,7 +111,7 @@ export const editShowing = (element, index) =>{
 
 
 export const deleteShowing = (index) =>{
-    return axios.delete('http://localhost:7777/showing/delete/' + index
+    return axios.delete('http://localhost:7777/showings/' + index
     ).then(response => {
         if (response.status === 200) {
             return response
