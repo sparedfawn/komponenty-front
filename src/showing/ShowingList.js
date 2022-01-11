@@ -168,7 +168,6 @@ class ShowingList extends React.Component {
                     </Link>
                 </div>)
             }
-            
         }
 
         let roomList = this.state.roomList.map(e => <p><input type="checkbox" id={e.number} 

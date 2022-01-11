@@ -1,6 +1,7 @@
 import "../style.css";
 import PropTypes from "prop-types"
 
+
 const Movie = (props) => {
 
     return (

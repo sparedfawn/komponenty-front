@@ -172,6 +172,44 @@ class AddShowing extends React.Component {
         }
 
         return (
+            // <div class="container-fluid ">
+            //     <div class="row paddingTriple">
+            //         <div class="col-md-4">
+            //             <div class="dropdown">
+            //                 <button class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" onClick={this.setIsOpenedMovie}>
+            //                     {this.state.headerValueMovie}
+            //                 </button>
+
+            //                 <ul class="dropdown-menu" >
+            //                     {this.state.movieList.map(e => <li class="listItem center" onClick={this.setHeaderValueMovie}>{e.title}</li>)}
+            //                 </ul>
+            //             </div> 
+            //         </div>
+
+            //         <div class="col-md-4">
+            //             <div class="dropdown">
+                            // <button class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" onClick={this.setIsOpenedRoom}>
+                            //     {this.state.headerValueRoom}
+                            // </button>
+
+                            // <ul class="dropdown-menu" >
+                            //     {this.state.roomList.map(e => <li class="listItem center" onClick={this.setHeaderValueRoom}>{e.number}</li>)}
+                            // </ul>
+            //             </div>
+            //         </div>
+
+            //         <div class="col-md-4">
+            //             <input type="datetime-local" value={this.state.date} onChange={this.dateOnChange}/>
+            //         </div>
+
+            //     </div>
+            //     <div class="row">
+            //         <div class="col-md-12">
+            //             <button onClick={this.addShowing}>Add</button>  
+            //         </div>
+            //     </div>
+            // </div>
+
             <div>
                 <div class="addShowing">
                     <div class="dropdown padding">
@@ -188,7 +226,6 @@ class AddShowing extends React.Component {
                         <button class="btn btn-outline-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" onClick={this.setIsOpenedRoom}>
                             {this.state.headerValueRoom}
                         </button>
-
                         <ul class="dropdown-menu" >
                             {this.state.roomList.map(e => <li class="listItem center" onClick={this.setHeaderValueRoom}>{e.number}</li>)}
                         </ul>
@@ -211,6 +248,7 @@ class AddShowing extends React.Component {
                     Wprowadź poprawne dane!
                 </div>
             </div>
+
         )
     }
 }
