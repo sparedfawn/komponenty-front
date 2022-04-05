@@ -1,7 +1,6 @@
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
 const Room = (props) => {
-
     return (
         <div class="layout padding">
             <div class="card">
@@ -9,14 +8,14 @@ const Room = (props) => {
                     <h5 class="card-title">Sala {props.num}</h5>
                     <p>Pojemnosc: {props.capacity}</p>
                 </div>
-            </div> 
+            </div>
         </div>
-    )
-}
+    );
+};
 
 Room.propTypes = {
     num: PropTypes.number.isRequired,
-    capacity: PropTypes.number.isRequired, 
-}
+    capacity: PropTypes.number.isRequired,
+};
 
-export default Room
+export default Room;
